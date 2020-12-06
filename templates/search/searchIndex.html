@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.card {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05), 
+                0 2px 2px rgba(0,0,0,0.05), 
+                0 4px 4px rgba(0,0,0,0.05), 
+                0 8px 8px rgba(0,0,0,0.05),
+                0 15px 15px rgba(0,0,0,0.05);
+    flex:1
+}
+
+.ptag {
+    margin-bottom: 0px;
+}
+</style>
+
+<div class="container">
+    <center><br><br><h3>Welcome to the</h3>
+    <h2><b>Black Cyber Recruiter</b></h2></center>
+    <hr><br>
+    <center>
+    <div class="column" style="display:flex; flex-direction:column; width: 100%; ">
+        <div class="row" style="margin:15px;">
+            <div class="column card">
+                <h3>Find your dream job!</h3>
+                <p class="ptag">Add images here</p>
+                {% comment %} <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'displayAllPersons' %}">View</a> {% endcomment %}
+            </div>
+            <div class="column card" style="background-color: white;">
+                <h3>Connect with mentors!</h3>
+                <p class="ptag">Add images here</p>
+                {% comment %} <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"  href="{% url 'findSearch' %}">Search</a> {% endcomment %}
+            </div>
+        </div>
+        <div class="row" style="margin-left:15px; margin-right:15px;">
+            <div class="column card" style="background-color: white;">
+                <br>
+                <h5>Don't wait.</h5>
+                <br>
+                <p class="ptag">Sign up for free today with the</p>
+                <p class="ptag"><b>Black Cyber Recruiter.</b></p>
+                <br>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"  href="{% url 'index' %}">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    </center>
+    <hr>
+</div>
+{% endblock %}
