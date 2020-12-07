@@ -1,26 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'dashbase.html' %}
 {% load static %}
 
 {% block content %}
 
 <style>
-.card {
-    background-color: white;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 15px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.05), 
-                0 2px 2px rgba(0,0,0,0.05), 
-                0 4px 4px rgba(0,0,0,0.05), 
-                0 8px 8px rgba(0,0,0,0.05),
-                0 14px 14px rgba(0,0,0,0.05);
-    flex:1
-}
-
-.ptag {
-    margin-bottom: 0px;
-}
-
 .cardlist {
     flex: 1;
     margin-right: 10px;
@@ -28,8 +11,11 @@
 
 .minicardheading {
     display:flex;
+    justify-content: space-between;
     align-items: center;
-    margin-left: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
 }
 
 .apptitle {
@@ -37,13 +23,23 @@
     flex: 4;
 }
 
-.date {
+.city {
     display: flex;
     flex: 1;
+    text-align: right; 
 }
 
-</style>
+.buttoncard {
+    width:100%;
+    padding: 20px;
+    margin: 15px;
+}
 
+.spacecolumn {
+    width: 30px;
+    height: 100%;
+}
+</style>
 
 {% comment %}  THIS NEEDS A LOT OF WORK {% endcomment %}
 <div class="container">
@@ -51,40 +47,22 @@
     <hr>
     <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
         <div class="column cardlist"> 
-            <h3 style="font-weight:normal; margin-left: 15px;">Submitted Applications</h3>
-            <div class="column card">
-                <div class="row minicardheading">
-                    <h5 class="apptitle ptag" style="font-weight:normal;">Software Engineer</h5>
-                    <p class="date ptag">July 2020</p>
-                </div>
-                <p class="ptag">Qualtrics</p>
-            </div>
-            <div class="column card">
-                <div class="row minicardheading">
-                    <h5 class="apptitle ptag" style="font-weight:normal;">Software Engineer</h5>
-                    <p class="date ptag">July 2020</p>
-                </div>
-                <p class="ptag">Qualtrics</p>
-            </div>
-            <div class="column card">
-                <div class="row minicardheading">
-                    <h5 class="apptitle ptag" style="font-weight:normal;">Software Engineer</h5>
-                    <p class="date ptag">July 2020</p>
-                </div>
-                <p class="ptag">Qualtrics</p>
-            </div>
-            {% for listing in job_lists %}
-            <form name="listingform" method="POST" action="{% url 'storeDeletedPerson' %}">
+            <h3 style="font-weight:normal; margin-left: 15px;">Job Offers</h3>
+            {% for job_offer in job_offers %}
+            <form name="offerform" method="POST" action="{% url 'index' %}">
                 {% csrf_token %}
-                <input type="hidden" name="applicant_id" value="{{ listing.id }}">
-                <button style="background-color:#CFCFCF; color:blue" class="column card ptag" type="submit">
-                    <h5 style="font-weight:normal;">{{listing.title}}</h5>
-                    <p>{{ listing.company }}</p>
-                    
+                <input type="hidden" name="job_offer_id" value="{{ job_offer.id }}">
+                <button class="column card buttoncard" type="submit">
+                    <div class="row minicardheading">
+                        <h5 class="apptitle ptag" style="font-weight:normal;">{{job_offer.job_title}}</h5>
+                        <p class="city ptag">{{ job_offer.city }}</p>
+                    </div>
+                    <p class="ptag">{{ job_offer.organization }}</p>
                 </button>
             </form>
             {% endfor %}
         </div>
+        <div class="spacecolumn"></div>
         <div class="column cardlist"> 
             <h3 style="font-weight:normal; margin-left: 15px;">All Mentors</h3>
             <div class="column card">

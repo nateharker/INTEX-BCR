@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 400px;
+        height: 400px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<div class="logincontainer container">
+    <div class="column">
+        <div class="card logincard">
+            <h3>Applicant Login</h3>
+            <br>
+            <br>
+            <form style="display:flex; flex-direction: column; align-items:center;"name="loginform" method="POST" action="{% url 'applicantdash' %}">
+                {% csrf_token %}
+                <input type="text" name="username" id="username" maxlength=50 placeholder="Enter Username" autofocus>
+                <br>
+                {% comment %} <input type="text" name="password" id="password"> {% endcomment %}
+                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Login</button>
+                <p style="margin-top:15px; text-align:center; color: red;">{{ error_message }}</p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

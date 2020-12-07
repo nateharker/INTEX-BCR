@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index.apps.IndexConfig',
     'search.apps.SearchConfig',
     'manlistings.apps.ManlistingsConfig',
 ]
@@ -78,8 +79,11 @@ WSGI_APPLICATION = 'intex_bcr.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'intex_bcr',
+                'USER': 'postgres',
+                'PASSWORD': 'adminadmin',        # getpass(),
+                'HOST': 'localhost'
     }
 }
 

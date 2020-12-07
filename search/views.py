@@ -1,23 +1,28 @@
+from index.models import User, JobOffer
 from django.shortcuts import render
 from django.http import HttpResponse
-# from .models import _____
 
-def indexPageView(request) :
-    return render(request, 'search/searchIndex.html')
 
-def aboutPageView(request) :
-    return render(request, 'search/about.html')
-
+# make sure the login page can override the key if necessary
 def applicantDashPageView(request) :
-    data = 'test' #get relevant user object based on ID stored somewhere?
+    if (request.session['user_id'] == None) & (request.POST.get('username') != request.session['user_id']):
+        input_username = request.POST.get('username')
+        user = User.objects.get(username=input_username)
+        if user != None:
+            request.session['user_id'] = user.id
+        else :
+            context = {
+                "error_message" : input_username + ' is not a valid username. Please try again.'
+            }
+            return render(request, 'index/login.html', context)
+    else: 
+        user = User.objects.get(id=request.session['user_id'])
+        job_offers = JobOffer.objects.filter(user_id=request.session['user_id'])
+        context = {
+            "user" : user,
+            "job_offers" : job_offers
+        }
+        return render(request, 'search/applicantDash.html', context)
 
-    context = {
-        "user" : data
-    }
-
-    return render(request, 'search/applicantDash.html', context)
-
-# perhaps instead of typing user in url you can just 
-# def userDashPageView(request, person.person_id) :
-#     return HttpResponse(person_id)
-
+def jobOfferPageView(request) :
+    return render(request, 'index/login.html')

@@ -1,4 +1,4 @@
-<!-- base.html -->
+<!-- dashbase.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -65,13 +65,19 @@
                             <a class="nav-link js-scroll-trigger" href="{% url 'index' %}" style="color: #CACFCC; font-size: 24px; font-weight: bold;">BCR</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'index' %}" style="background-color: #252527; padding-left: 50px; padding-right: 50px; color: #CACFCC; margin-top:5px; margin-left: 50px; font-size: 16px; border-radius:5px;">Home</a>
+                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'applicantdash' %}" style="background-color: #252527; padding-left: 50px; padding-right: 50px; color: #CACFCC; margin-top:5px; margin-left: 50px; font-size: 16px; border-radius:5px;">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'about' %}" style="background-color: #252527; padding-left: 50px; padding-right: 50px; color: #CACFCC; margin-top:5px; margin-left: 20px; font-size: 16px; border-radius:5px;">About</a>
+                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'applicantdash' %}" style="background-color: #007bff; padding-left: 50px; padding-right: 50px; color: #CACFCC; margin-top:5px; margin-left: 20px; font-size: 16px; border-radius:5px;">Search Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'applicantdash' %}" style="background-color: #007bff; padding-left: 50px; padding-right: 50px; color: #CACFCC; margin-top:5px; margin-left: 20px; font-size: 16px; border-radius:5px;">Search Mentors</a>
                         </li>
                         <li class="nav-item "> 
-                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'login' %}" style="background-color: #007bff; padding-left: 50px; padding-right: 50px; color: white; margin-top:5px; position: absolute; right: 200px; font-size: 16px; border-radius:5px;">Login</a>
+                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'applicantdash' %}" style="background-color: #252527; padding-left: 50px; padding-right: 50px; color: white; margin-top:5px; position: absolute; right: 200px; font-size: 16px; border-radius:5px;">Messages</a>
+                        </li>
+                        <li class="nav-item "> 
+                            <a class="nav-link js-scroll-trigger navbuttonshade" href="{% url 'applicantdash' %}" style="background-color: #252527; padding-left: 50px; padding-right: 50px; color: white; margin-top:5px; position: absolute; right: 200px; font-size: 16px; border-radius:5px;">Account</a>
                         </li>
                     </ul>
                 </div>
