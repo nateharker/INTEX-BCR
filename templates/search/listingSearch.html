@@ -42,29 +42,34 @@
 </style>
 
 <div class="container">
-    <br><br><h2>Applicant Dashboard</h2>
+    <br><br><h2>Search Job Listings</h2>
+    <form name="searchlistingsform" method="POST" action="{% url 'listingsearch' %}">
+        {% csrf_token %}
+        <input type="text" id="search_terms" name="search_terms" maxlength=50 placeholder="Search Jobs" autofocus>
+        <button class="btn btn-primary btn-xl text-uppercase" type="submit">Search</button>
+    </form>
     <hr>
     <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
         <div class="column cardlist"> 
-            <h3 style="font-weight:normal; margin-left: 15px;">Job Offers</h3>
+            <h3 style="font-weight:normal; margin-left: 15px;">Job Results</h3>
             <h5 style="font-weight:normal; margin-left: 15px;">{{ no_offers_message }}</h5>
-            {% for job_offer in job_offers %}
-            <form name="offerform" method="POST" action="{% url 'index' %}">
+            {% for job_listing in job_listings %}
+            <form name="listingform" method="POST" action="{% url 'index' %}">
                 {% csrf_token %}
-                <input type="hidden" name="job_offer_id" value="{{ job_offer.id }}">
+                <input type="hidden" name="job_listing_id" value="{{ job_listing.id }}">
                 <button class="column card buttoncard" type="submit">
                     <div class="row minicardheading">
-                        <h5 class="apptitle ptag" style="font-weight:normal;">{{job_offer.job_title}}</h5>
-                        <p class="city ptag">{{ job_offer.city }}</p>
+                        <h5 class="apptitle ptag" style="font-weight:normal;">{{job_listing.job_title}}</h5>
+                        <p class="city ptag">{{ job_listing.city }}</p>
                     </div>
-                    <p class="ptag">{{ job_offer.organization }}</p>
+                    <p class="ptag">{{ job_listing.organization }}</p>
                 </button>
             </form>
             {% endfor %}
         </div>
         <div class="spacecolumn"></div>
         <div class="column cardlist"> 
-            <h3 style="font-weight:normal; margin-left: 15px;">All Mentors</h3>
+            <h3 style="font-weight:normal; margin-left: 15px;">Preview</h3>
             <div class="column card">
                 <div class="row minicardheading">
                     <h5 class="apptitle ptag" style="font-weight:normal;">Johnny Appleseed</h5>
