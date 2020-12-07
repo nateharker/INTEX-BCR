@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.card {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05), 
+                0 2px 2px rgba(0,0,0,0.05), 
+                0 4px 4px rgba(0,0,0,0.05), 
+                0 8px 8px rgba(0,0,0,0.05),
+                0 15px 15px rgba(0,0,0,0.05);
+    flex:1
+}
+
+.ptag {
+    margin-bottom: 0px;
+}
+</style>
+
+<div class="container">
+    <br>
+    <div class="row"> 
+        <h2 style="margin-left:40px; margin-bottom:0px; display:flex; flex:10;">About Us</h2>
+        <a style="flex:1; margin-right:40px;"class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{% url 'index' %}">Sign Up</a>
+    </div>
+    <div class="row card" style="display:flex; flex-direction:row; height: 100%; ">
+        <div class="row" style="margin:15px;">
+            <p>The Black Cyber Recruiter was founded in 2020 by a group of young entrepreneuers who wanted to even the playing field.</p>
+            <br>
+            <p>For years, African American applicants have stood at a disadvantage in the recruiting process due to these three main issues:</p>
+            <br>
+            <div style="margin-left:30px;">
+            <p class="ptag"><b>1. GPA:</b> Recruiters measured heavily weighted GPA into recruiting decisions. Black applicants tend to have lower GPA on average than the non-black population. Furthermore, research has shown that GPA is not an accurate measure of how well a candidate will do in a position.</p>
+            <p class="ptag"><b>2. Recruiting windows</b> are too short. Some are as short as three weeks long leaving the majority of applicants unprepared with resumes, cover letters, and letters of recommendation far from finished.</p>
+            <p class="ptag"><b>3. Nontransparency</b> in job applications discourage black applicants from applying. Research has shown that 36% more black applicants will apply when relocation assistance is provided.</p>
+            </div>
+            <br>
+            <p>We believe that the Black Cyber Recruiter combats these issue and more, giving black applicants a fair shot at earning the career they want and deserve.</p>
+            <br>
+            <p>If you are interested, sign up and get started today!</p>
+        </div>
+        <div class="row" style="margin-left:15px; margin-right:15px;">
+            <div class="column card" style="background-color: white;">
+                <br>
+                <h5>Don't wait.</h5>
+                <br>
+                <p class="ptag">Sign up for free today with the</p>
+                <p class="ptag"><b>Black Cyber Recruiter.</b></p>
+                <br>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"  href="{% url 'index' %}">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    </center>
+</div>
+{% endblock %}
