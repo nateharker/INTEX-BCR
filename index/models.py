@@ -19,8 +19,8 @@ class Skill(models.Model) :
 
 class Joblisting(models.Model) :
     job_title = models.CharField(max_length=100)
-    description = models.CharField(max_length=5000)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    description = models.CharField(max_length=9000)
+    organization = models.ForeignKey(Organization, null=True, on_delete=models.DO_NOTHING)
     city = models.CharField(max_length=50)
     contracts = models.CharField(max_length=50)
     status = models.CharField(max_length=15)

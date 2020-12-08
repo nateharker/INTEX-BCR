@@ -49,7 +49,7 @@
             <h3 style="font-weight:normal; margin-left: 15px;">Job Offers</h3>
             <h5 style="font-weight:normal; margin-left: 15px;">{{ no_offers_message }}</h5>
             {% for job_offer in job_offers %}
-            <form name="offerform" method="POST" action="{% url 'index' %}">
+            <form name="offerform" method="POST" action="{% url 'offerdetail' %}">
                 {% csrf_token %}
                 <input type="hidden" name="job_offer_id" value="{{ job_offer.id }}">
                 <button class="column card buttoncard" type="submit">

@@ -3,6 +3,8 @@ from django.http import HttpResponse
 # from .models import _____
 
 def loginPageView(request) :
+    # reset user_id when accessing the login page
+    request.session['user_id'] = None
     return render(request, 'index/login.html')
 
 def indexPageView(request) :

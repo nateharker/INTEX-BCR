@@ -1,0 +1,36 @@
+{% extends 'dashbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 400px;
+        height: 400px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<div class="logincontainer container">
+    <div class="column">
+        <div class="card logincard">
+            <center>
+                <img src="{% static 'img/Hardhat.png' %}" alt='Construction hard hat' width=100px>
+                <br>
+                <br>
+                <h3>This page is under construction. Sorry!</h3>
+                <p>Convince your boss to work with us and we'll get it done in no time. ;)</p>
+            </center>
+        </div>
+    </div>
+</div>
+{% endblock %}

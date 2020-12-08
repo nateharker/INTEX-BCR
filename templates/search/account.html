@@ -1,0 +1,52 @@
+{% extends 'dashbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 500px;
+        height: 500px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+
+    .accountinfo {
+        margin-bottom: 0px;
+        text-align: center;
+    }
+
+</style>
+<div class="container">
+    <div class="column">
+        <center>
+        <br>
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <hr>
+        <div class="card logincard">
+            <img src="{% static 'img/Account Photo.png' %}" width=200px alt="Profile Image">
+            <br>
+            <form style="display:flex; flex-direction: column; align-items:center; text-align:center;"name="editaccountform" method="POST" action="{% url 'saveuser' %}">
+                {% csrf_token %}
+                <input type="text" class="accountinfo" name="first_name" id="first_name" maxlength=50 placeholder="First name" value="{{ user.first_name }}">
+                <input type="text" class="accountinfo" name="last_name" id="last_name" maxlength=50 placeholder="Last name" value="{{ user.last_name }}">
+                <input type="text" class="accountinfo" name="username" id="username" maxlength=50 placeholder="Username" value="{{ user.username }}">
+                <input type="text" class="accountinfo" name="email" id="email" maxlength=50 placeholder="Email" value="{{ user.email }}">
+                <br>
+                {% comment %} <input type="text" name="password" id="password"> {% endcomment %}
+                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Save</button>
+            </form>
+        </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

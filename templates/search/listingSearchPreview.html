@@ -21,6 +21,7 @@
 .apptitle {
     display: flex;
     flex: 4;
+    text-align:left;
 }
 
 .city {
@@ -45,7 +46,7 @@
     <br><br><h2>Search Job Listings</h2>
     <form style="display: flex; justify-content: space-between;" name="searchlistingsform" method="POST" action="{% url 'listingsearch' %}">
         {% csrf_token %}
-        <input style="width: 100%; margin-right: 40px;" type="text" id="search_terms" name="search_terms" maxlength=50 placeholder="Search Jobs" autofocus>
+        <input style="width: 100%; margin-right: 40px;" type="text" id="search_terms" name="search_terms" value="{{ search_terms }}" maxlength=50 placeholder="Search Jobs">
         <button class="btn btn-primary btn-xl text-uppercase" type="submit">Search</button>
     </form>
     <hr>
@@ -67,6 +68,29 @@
                 </button>
             </form>
             {% endfor %}
+        </div>
+        <div class="spacecolumn"></div>
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">Preview</h3>
+            {% for selected_listing in selected_listings %}
+            <div class="column card">
+                <div class="row minicardheading">
+                    <h4 class="apptitle ptag">{{ selected_listing.job_title }}</h5>
+                    <h6 style="font-weight:normal;">{{ selected_listing.city }}</h6>
+                </div>
+                <h6 style="font-weight:normal;">{{ selected_listing.organization }}</h6>
+                <br>
+                <h6 class="ptag">Job Description</h6>
+                <p class="ptag">{{ selected_listing.description|truncatewords:50 }}</p>
+                <br>
+                <form name="viewjobform" method="POST" action="{% url 'listingdetail' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="selected_listing_id" name="selected_listing_id" value="{{ selected_listing.id }}">
+                    <button class="btn btn-primary btn-xl text-uppercase" type="submit">View Job</button>
+                </form>
+            </div>
+            {% endfor %}
+            
         </div>
     </div>
 </div>

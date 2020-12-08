@@ -1,0 +1,67 @@
+{% extends 'dashbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.cardlist {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.minicardheading {
+    display:flex;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.apptitle {
+    display: flex;
+    flex: 4;
+}
+
+.city {
+    display: flex;
+    flex: 1;
+    text-align: right; 
+}
+
+.buttoncard {
+    width:100%;
+    padding: 20px;
+    margin: 15px;
+}
+
+.spacecolumn {
+    width: 30px;
+    height: 100%;
+}
+</style>
+
+<div class="container">
+    <center>
+        <br><br>
+        <div class="row minicardheading">
+            <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'applicantdash' %}">Back</a>
+            <div class="column" style="margin-left:200px;">
+                <h2>{{ selected_offer.job_title }}</h2>
+                <h3 style="font-weight:normal;">{{ selected_offer.organization }}<h3>
+            </div>
+        </div>
+    </center>
+    <hr>
+    <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">Overview</h3>
+            <div class="column card" style="max-width: 500px;">
+                <li class="ptag"><b>Location:</b> {{ selected_offer.city }}</li>
+                <li class="ptag"><b>Matching Skills:</b> {{ selected_offer.matching_skills }}</li>
+                <li class="ptag"><b>Contracts:</b> {{ selected_offer.contracts }}</li>
+                <li class="ptag"><b>Status:</b> {{ selected_offer.status }}</li>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
