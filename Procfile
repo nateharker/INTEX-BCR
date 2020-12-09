@@ -1,0 +1,1 @@
+web: gunicorn intex_bcr.wsgi
