@@ -1,0 +1,60 @@
+{% extends 'orgdashbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 350px;
+        height: 550px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+
+    .accountinfo {
+        margin-bottom: 0px;
+        text-align: center;
+    }
+    
+    .ptag {
+        margin-bottom: 0px;
+    }
+
+</style>
+<div class="container">
+    <div class="column">
+        <center>
+        <br>
+        <h2>{{ org.company_name }}</h2>
+        <hr>
+        <br>
+        <div class="card logincard">
+            <img src="{% static 'img/Account Photo.png' %}" width=180px alt="Profile Image">
+            <br>
+            <h5 class="ptag">Email</h5>
+            <p class="ptag">{{ org.email }}</p>
+            <h5 class="ptag">Address</h5>
+            <p class="ptag">{{ org.address }}</p>
+            <h5 class="ptag">Size</h5>
+            <p class="ptag">{{ org.size }}</p>
+            <h5 class="ptag">Sector</h5>
+            <p>{{ org.sector }}</p>
+            <form name="offerform" method="POST" action="{% url 'index' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-xl text-uppercase" style="margin-top: 10px;" type="submit">Logout
+                </button>
+            </form>
+        </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'dashbase.html' %}
+{% extends 'orgdashbase.html' %}
 {% load static %}
 
 {% block content %}
@@ -44,7 +44,7 @@
     <center>
         <br><br>
         <div class="row minicardheading">
-            <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'listingpreview' %}">Back</a>
+            <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'orgdash' %}">Back</a>
             <div class="column" style="margin-left:100px;">
                 <h2>{{ selected_listing.job_title }}</h2>
                 <h3 style="font-weight:normal;">{{ selected_listing.organization }}<h3>
@@ -60,33 +60,10 @@
                 <li class="ptag"><b>Contracts:</b> {{ selected_listing.contracts }}</li>
                 <li class="ptag"><b>Status:</b> {{ selected_listing.status }}</li>
             </div>
-            {% comment %} Implement if we have extra time {% endcomment %}
-            {% comment %} <h3 style="font-weight:normal; margin-left: 15px;">Skills</h3>
-            <div class="column card">
-                {% for skill in skill_descriptions %}
-                <p class="ptag">{{ skill.description }}</p>
-                {% endfor %}
-            </div> {% endcomment %}
             <h3 style="font-weight:normal; margin-left: 15px;">Listing Description</h3>
             <div class="column card">
                 <p class="ptag">{{ selected_listing.description }}</p>
             </div>
-        
-        </div>
-        <div class="spacecolumn">
-        </div>
-        <div class="column cardlist"> 
-            <h3 style="font-weight:normal; margin-left: 15px;">Recommended Jobs</h3>
-            <h5 style="font-weight:normal; margin-left: 15px;">{{ null_org_message }}</h5>
-            {% for listing in listing_list %}
-                <div class="column card">
-                    <div class="row minicardheading">
-                        <h5 class="apptitle ptag" style="font-weight:normal;">{{ listing.job_title }}</h5>
-                        <h6 style="font-weight:normal;">{{ listing.city }}</h6>
-                    </div>
-                    <p class="ptag">{{ listing.organization }}</p>
-                </div>
-            {% endfor %} 
         </div>
     </div>
 </div>

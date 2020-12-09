@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import applicantDashPageView, listingSearchPageView, listingPreviewPageView, listingDetailPageView, underConstructionPageView, accountPageView, offerDetailPageView, saveUserInfoPageView
+from .views import applicantDashPageView, listingSearchPageView, listingPreviewPageView, listingDetailPageView, underConstructionPageView, offerDetailPageView 
+from .views import saveUserInfoPageView, deleteUserPageView, accountPageView
 
 urlpatterns = [
     path("applicantdash", applicantDashPageView, name="applicantdash"),
@@ -9,6 +10,7 @@ urlpatterns = [
     path("offerdetail", offerDetailPageView, name="offerdetail"),
     path("account", accountPageView, name="account"),
     path("saveuser", saveUserInfoPageView, name="saveuser"),
-    
+    path("deleteuser", deleteUserPageView, name="deleteuser"),
+
     path("underconstruction", underConstructionPageView, name="underconstruction"),
 ]

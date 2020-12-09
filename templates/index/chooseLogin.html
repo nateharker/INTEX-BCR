@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 400px;
+        height: 400px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chooseuserbutton {
+        margin-top: 10px;
+        border-color: gray;
+    }
+
+</style>
+<div class="logincontainer container">
+    <div class="column">
+        <div class="card logincard">
+            <center>
+            <h3>Choose your user</h3>
+            </center>
+            <form style="display:flex; flex-direction: column; align-items:center;"name="userform" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="usertype" id="usertype" maxlength=50 value='user'>
+                <button class="chooseuserbutton btn btn-primary btn-xl text-uppercase" type="submit">Applicant</button>
+            </form>
+            <form style="display:flex; flex-direction: column; align-items:center;"name="userform" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="usertype" id="usertype" maxlength=50 value='organization'>
+                <button class="chooseuserbutton btn btn-xl text-uppercase" type="submit">Organization</button>
+            </form>
+            <form style="display:flex; flex-direction: column; align-items:center;"name="userform" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="usertype" id="usertype" maxlength=50 value='mentor'>
+                <button class="chooseuserbutton btn btn-xl text-uppercase" type="submit">Mentor</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'orgdashbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.cardlist {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.minicardheading {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.apptitle {
+    display: flex;
+    flex: 4;
+}
+
+.city {
+    display: flex;
+    flex: 1;
+    text-align: right; 
+}
+
+.buttoncard {
+    width:100%;
+    padding: 20px;
+    margin: 15px;
+}
+
+.spacecolumn {
+    width: 30px;
+    height: 100%;
+}
+</style>
+
+<div class="container">
+    <br><br><h2>Organization Dashboard</h2>
+    <hr>
+    <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">Job Listings</h3>
+            <h5 style="font-weight:normal; margin-left: 15px;">{{ no_listings_message }}</h5>
+            {% for job_listing in job_listings %}
+            <form name="listingform" method="POST" action="{% url 'simplistdet' %}">
+                {% csrf_token %}
+                <input type="hidden" name="selected_listing_id" value="{{ job_listing.id }}">
+                <button class="column card buttoncard" type="submit">
+                    <div class="row minicardheading">
+                        <h5 class="apptitle ptag" style="font-weight:normal;">{{job_listing.job_title}}</h5>
+                        <p class="city ptag">{{ job_listing.city }}</p>
+                    </div>
+                    <p class="ptag">{{ job_listing.organization }}</p>
+                </button>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

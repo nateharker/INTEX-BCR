@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .logincontainer {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    .logincard {
+        width: 350px;
+        height: 550px;
+        
+        align-items: center;
+        justify-content: center;
+    }
+
+    .accountinfo {
+        margin-bottom: 0px;
+        text-align: center;
+    }
+
+    .deletebutton {
+        background-color: #d11a2a;
+        border-color: #d11a2a;
+        margin-top: 10px;
+        color: #fff;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .deletebutton:hover {
+        color: #fff;
+    }
+
+</style>
+<div class="container">
+    <div class="column">
+        <center>
+        <hr>
+        <div class="card logincard">
+            <h5 style="margin-bottom:15px;">Please fill out the basic information below.</h5>
+            <img src="{% static 'img/Account Photo.png' %}" width=180px alt="Profile Image">
+            <br>
+            <form style="display:flex; flex-direction: column; align-items:center; text-align:center;"name="createuserfornm" method="POST" action="{% url 'createuser' %}">
+                {% csrf_token %}
+                <input type="text" class="accountinfo" name="first_name" id="first_name" maxlength=50 placeholder="First name">
+                <input type="text" class="accountinfo" name="last_name" id="last_name" maxlength=50 placeholder="Last name">
+                <input type="text" class="accountinfo" name="username" id="username" maxlength=50 placeholder="Username">
+                <input type="text" class="accountinfo" name="email" id="email" maxlength=50 placeholder="Email">
+                <br>
+                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Register</button>
+            </form>
+        </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

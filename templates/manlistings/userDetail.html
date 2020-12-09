@@ -1,0 +1,84 @@
+{% extends 'orgdashbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.cardlist {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.minicardheading {
+    display:flex;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.apptitle {
+    display: flex;
+    flex: 4;
+}
+
+.city {
+    display: flex;
+    flex: 1;
+    text-align: right; 
+}
+
+.buttoncard {
+    width:100%;
+    padding: 20px;
+    margin: 15px;
+}
+
+.spacecolumn {
+    width: 30px;
+    height: 100%;
+}
+</style>
+
+<div class="container">
+    <center>
+        <br><br>
+        <div class="row minicardheading">
+            <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'usersearch' %}">Back</a>
+            <div class="column" style="margin-left:100px;">
+                <h2>{{ selected_user.first_name }} {{ selected_user.last_name }}</h2>
+                <h3 style="font-weight:normal;">{{ selected_user.email }}<h3>
+            </div>
+        </div>
+    </center>
+    <hr>
+    <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">Overview</h3>
+            <div class="column card">
+                <center>
+                <img src="{% static 'img/Hardhat.png' %}" alt='Construction hard hat' width=100px>
+                <br>
+                <br>
+                <h3>This feature is under construction. Sorry!</h3>
+                <p>Convince your boss to work with us and we'll get it done in no time. ;)</p>
+                </center>
+            </div>        
+        </div>
+        <div class="spacecolumn">
+        </div>
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">Recommended Users</h3>
+            <h5 style="font-weight:normal; margin-left: 15px;">{{ null_user_list_message }}</h5>
+            {% for user in recommended_user_list %}
+                <div class="column card">
+                    <div class="row minicardheading">
+                        <h5 class="apptitle ptag" style="font-weight:normal;">{{ user.first_name }} {{ user.last_name }}</h5>
+                    </div>
+                    <p class="ptag">{{ user.email }}</p>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -13,8 +13,8 @@
     }
 
     .logincard {
-        width: 500px;
-        height: 500px;
+        width: 350px;
+        height: 550px;
         
         align-items: center;
         justify-content: center;
@@ -25,6 +25,18 @@
         text-align: center;
     }
 
+    .deletebutton {
+        background-color: #d11a2a;
+        border-color: #d11a2a;
+        margin-top: 10px;
+        color: #fff;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .deletebutton:hover {
+        color: #fff;
+    }
+
 </style>
 <div class="container">
     <div class="column">
@@ -32,8 +44,13 @@
         <br>
         <h2>{{ user.first_name }} {{ user.last_name }}</h2>
         <hr>
+        {% if welcome_message %}
+        <div class="card" style="width:600px;">
+            <h3 class="ptag">🎉 Welcome to your new account! 🎉</h3>
+        </div>
+        {% endif %}
         <div class="card logincard">
-            <img src="{% static 'img/Account Photo.png' %}" width=200px alt="Profile Image">
+            <img src="{% static 'img/Account Photo.png' %}" width=180px alt="Profile Image">
             <br>
             <form style="display:flex; flex-direction: column; align-items:center; text-align:center;"name="editaccountform" method="POST" action="{% url 'saveuser' %}">
                 {% csrf_token %}
@@ -42,8 +59,17 @@
                 <input type="text" class="accountinfo" name="username" id="username" maxlength=50 placeholder="Username" value="{{ user.username }}">
                 <input type="text" class="accountinfo" name="email" id="email" maxlength=50 placeholder="Email" value="{{ user.email }}">
                 <br>
-                {% comment %} <input type="text" name="password" id="password"> {% endcomment %}
                 <button class="btn btn-primary btn-xl text-uppercase" type="submit">Save</button>
+            </form>
+            <form name="offerform" method="POST" action="{% url 'index' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-xl text-uppercase" style="margin-top: 10px;" type="submit">Logout
+                </button>
+            </form>
+            <form name="offerform" method="POST" action="{% url 'deleteuser' %}">
+                {% csrf_token %}
+                <button class="deletebutton btn btn-xl text-uppercase" type="submit">Delete
+                </button>
             </form>
         </div>
         </center>

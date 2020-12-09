@@ -1,0 +1,73 @@
+{% extends 'orgdashbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.cardlist {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.minicardheading {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.apptitle {
+    display: flex;
+    flex: 4;
+}
+
+.city {
+    display: flex;
+    flex: 1;
+    text-align: right; 
+}
+
+.buttoncard {
+    width:100%;
+    padding: 20px;
+    margin: 15px;
+}
+
+.spacecolumn {
+    width: 30px;
+    height: 100%;
+}
+</style>
+
+<div class="container">
+    <br><br><h2>Search Users</h2>
+    <form style="display: flex; justify-content: space-between;" name="searchusersform" method="POST" action="{% url 'usersearch' %}">
+        {% csrf_token %}
+        <input style="width: 100%; margin-right: 40px;" type="text" id="first_name" name="first_name" maxlength=50 placeholder="Enter First Name" autofocus>
+        <input style="width: 100%; margin-right: 40px;" type="text" id="last_name" name="last_name" maxlength=50 placeholder="Enter Last Name">
+        <button class="btn btn-primary btn-xl text-uppercase" type="submit">Search</button>
+    </form>
+    <hr>
+    <div class="row" style="margin-left: -.75rem; display:flex; flex-direction:row; width: 100%; ">
+        <div class="column cardlist"> 
+            <h3 style="font-weight:normal; margin-left: 15px;">User Results</h3>
+            <h5 style="font-weight:normal; margin-left: 15px;">{{ no_listings_message }}</h5>
+            {% for applicant in applicants %}
+            <form name="offerform" method="POST" action="{% url 'userdetail' %}">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ applicant.id }}">
+                <button class="column card buttoncard" type="submit">
+                    <div class="row minicardheading">
+                        <h5 class="apptitle ptag" style="font-weight:normal;">{{ applicant.first_name }} {{applicant.last_name}}</h5>
+                        
+                    </div>
+                    <p class="ptag">{{ applicant.email }}</p>
+                </button>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
