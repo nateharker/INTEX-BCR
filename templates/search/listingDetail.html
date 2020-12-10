@@ -15,6 +15,7 @@
     margin: 0px;
     padding: 0px;
     width: 100%;
+    flex-wrap: nowrap;
 }
 
 .apptitle {
@@ -45,10 +46,11 @@
         <br><br>
         <div class="row minicardheading">
             <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'listingpreview' %}">Back</a>
-            <div class="column" style="margin-left:100px;">
+            <div class="column" style="margin-left:20px; margin-right:20px;">
                 <h2>{{ selected_listing.job_title }}</h2>
                 <h3 style="font-weight:normal;">{{ selected_listing.organization }}<h3>
             </div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'underconstruction' %}">Apply</a>
         </div>
     </center>
     <hr>
