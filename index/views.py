@@ -4,13 +4,14 @@ from .models import User
 
 # this is run at the click of a button on choose user type page before getting to the page that allows you to enter credentials
 def loginPageView(request) :
-    # reset user_id, org_id, and user_type when accessing the login page, or set for the first time
+    # reset delete and reset session information, including user_id, org_id, and user_type when accessing the login page, or set for the first time
     request.session.flush()
     request.session.clear_expired()
     request.session.set_expiry(0)
     request.session['user_id'] = None
     request.session['org_id'] = None
     request.session['user_type'] = None
+    # redirect to the associated login page
     if request.method == 'POST':
         if request.POST.get('usertype') == 'user':
             request.session['user_type'] = 'user'
@@ -23,22 +24,25 @@ def loginPageView(request) :
             return render(request, 'manlistings/mentorlogin.html')
     else: 
         return render(request, 'index/login.html')
-    
 
+# show the home page and reset the session variables
 def indexPageView(request) :
     request.session.flush()
     request.session.clear_expired()
     return render(request, 'index/home.html')
 
+# show the about page and reset the session variables
 def aboutPageView(request) :
     request.session.flush()
     request.session.clear_expired()
     return render(request, 'index/about.html')
 
+# show the register page
 def registerPageView(request) :
     # render register form
     return render(request, 'index/register.html')
 
+# create a new user by saving the info from the form into a new user object 
 def createUserPageView(request) :
     # save data to database
     # save username to session storage
@@ -54,7 +58,7 @@ def createUserPageView(request) :
     
     user = User.objects.get(username=request.POST.get('username'))
     request.session['user_id'] = user.id
-
+    # pass user through to account page with welcome banner
     context = {
         "user" : user,
         "welcome_message" : "Welcome to your new account!"

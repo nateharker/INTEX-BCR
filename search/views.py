@@ -2,7 +2,7 @@ from index.models import JobListingSkill, Joblisting, User, JobOffer, Skill
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# organization recommender
+# organization recommender with all inputs (simplified to reduce loading times)
 def bcr_org_recommender(userId, orgId) :
     import urllib
     from urllib import request
@@ -37,6 +37,7 @@ def bcr_org_recommender(userId, orgId) :
         orgArray.append(int(result['Results']['output1']['value']['Values'][0][iNum]))
     return orgArray
 
+# organization recommender when we don't have a valid User id (simplified to reduce loading times)
 def bcr_similar_companies(orgId) :
   import urllib
   from urllib import request
@@ -73,6 +74,7 @@ def bcr_similar_companies(orgId) :
 
   return relatedArray      
 
+# organization recommender for when we don't have an organization id (simplified to reduce loading times)
 def bcr_org_recom_simp(userId) :
   import urllib
   from urllib import request
@@ -108,18 +110,18 @@ def bcr_org_recom_simp(userId) :
 
   return orgArray
 
-
-# make sure the login page can override the key if necessary
+# renders applicant dashboard page if username is valid, also returns job offers for the page. 
+# Otherwise, redirects to login page with invalid username error message 
 def applicantDashPageView(request) :
-    # if there's no user saved, OR the user in the username form doesn't match the user saved, then get the new username, else reassign the user to be the saved one
-    if (request.session['user_id'] == None) :
+    # if submitting login form to get here, store that id in session and display page, otherwise, display the user being used when navigating to page
+    if (request.method == 'POST') :
         input_username = request.POST.get('username')
-        user = User.objects.filter(username=input_username)
-        # if there's a user that matches that username, store it's id, else, let the user know it's an invalid username 
-        if user.count() > 0:
-            user = user.first()
+        # if there's a user that matches that username, store it's id in the session and render the applicant dash with context
+        try: 
+            user = User.objects.get(username=input_username)
             request.session['user_id'] = user.id
-        else :
+        # if no matching objects, let the user know it's an invalid username 
+        except: 
             context = {
                 "error_message" : input_username + ' is not a valid username. Please try again.'
             }
@@ -127,13 +129,15 @@ def applicantDashPageView(request) :
     else: 
         user = User.objects.get(id=request.session['user_id'])
     
-    # collect job offers aassociated with user, store the context, and return applicantDash
+    # collect job offers aassociated with user
     job_offers = JobOffer.objects.filter(user_id=request.session['user_id'])
-    # if no associated job offers, return string explaining so, else leave string blank
+    # if no associated job offers, return string explaining so
     if job_offers.count() < 1 :
         no_offers_message = 'You have no job offers.'
-    else :
+    else : 
         no_offers_message = ''
+
+    #  store the context, and return applicantDash
     context = {
         "user" : user,
         "job_offers" : job_offers,
@@ -141,11 +145,11 @@ def applicantDashPageView(request) :
     }
     return render(request, 'search/applicantDash.html', context)
 
-def jobOfferPageView(request) :
-    return render(request, 'index/login.html')
-
+# show listings that are searched by users
 def listingSearchPageView(request) :
-    
+    # if getting here through navigation, don't try to collect search terms and just display the page without context
+    # if posting a form to get here, it means we have searched something, so collect search terms, store them so we can come back to them, 
+    # and find listings where the search terms are inside of the job title
     if request.method == 'POST':
         search_terms = request.POST.get('search_terms')
         request.session['search_terms'] = search_terms
@@ -165,10 +169,13 @@ def listingSearchPageView(request) :
     else :
         return render(request, 'search/listingSearch.html')
 
+# show the side preview of a listing, making available the detail button
 def listingPreviewPageView(request) :
     listing_id = request.POST.get('selected_listing_id')
     selected_listing = Joblisting.objects.filter(id=listing_id)
+    # redo search so we can have the listing list still
     job_listings = Joblisting.objects.filter(job_title__icontains=request.session['search_terms'])[:50]
+    # pass the job_listings list and selected listing
     context = {
         "selected_listings" : selected_listing,
         "job_listings" : job_listings,
@@ -176,8 +183,9 @@ def listingPreviewPageView(request) :
     }
     return render(request, 'search/listingSearchPreview.html', context)
 
-
+# show the listing details and execute a recommender depending on how much valid info we hav
 def listingDetailPageView(request) :    
+    # grab the selected listing we are showing details and recommendations for
     listing_id = request.POST.get('selected_listing_id')
     selected_listing = Joblisting.objects.get(id=listing_id)
     userId = int(request.session['user_id'])
@@ -185,6 +193,7 @@ def listingDetailPageView(request) :
     organization_list = []
     null_org_message = ""
 
+    # determine if we have a vaild userId and orgId and run a different recommendation accordingly 
     if (selected_listing.organization is None) and ((userId > 201) or (userId < 2)):
         null_org_message = "We don't have enough information to make a recommendation."
     else : 
@@ -196,26 +205,20 @@ def listingDetailPageView(request) :
                 organization_list = bcr_similar_companies(orgId)
             else : 
                 organization_list = bcr_org_recommender(userId, orgId)
-
+        # the recommenders return organizations, so choose the top listing from each organization and add that to a list of them
+        # if the organization doesn't have any listings, don't give it a card (so we don't have blank listing cards)
         for org_id in organization_list :
             if (Joblisting.objects.filter(organization=org_id)).first() is not None :
                 listing_list.append((Joblisting.objects.filter(organization=org_id)).first())
-
-    # test_listing = (Joblisting.objects.filter(organization=organization_list[0])).first()
-    # implement if we extra time
-    # listing_skills = JobListingSkill.objects.filter(job_listing=listing_id)
-    # skill_descriptions = Skill.objects.filter(id=listing_skills.skill)
 
     context = {
         "selected_listing" : selected_listing,
         "listing_list" : listing_list,
         "null_org_message" : null_org_message,
-        # "test_listing" : test_listing,
-        # "listing_skills" : listing_skills,
-        # "skill_descriptions" : skill_descriptions,
     }
     return render(request, 'search/listingDetail.html', context)
 
+# display job offer detail page with job offer details that are passed through from when a job offer is clicked on applicant dashboard
 def offerDetailPageView(request) :
     offer_id = request.POST.get('job_offer_id')
     selected_offer = JobOffer.objects.get(id=offer_id)
@@ -224,9 +227,11 @@ def offerDetailPageView(request) :
     }
     return render(request, 'search/offerDetail.html', context)
 
+# page placeholder for pages that we don't have the time or resources to implement
 def underConstructionPageView(request) :
     return render(request, 'search/underConstruction.html')
 
+# display account details and allow updating and deleting of current user
 def accountPageView(request) :
     user = User.objects.get(id=request.session['user_id'])
     
@@ -236,6 +241,7 @@ def accountPageView(request) :
     }
     return render(request, 'search/account.html', context)
 
+# this actually saves the edited fields on the account page and returns the account page again
 def saveUserInfoPageView(request) :
     user = User.objects.get(id=request.session['user_id'])
     user.first_name = request.POST.get('first_name')
@@ -249,6 +255,7 @@ def saveUserInfoPageView(request) :
     }
     return render(request, 'search/account.html', context)
 
+# this view function deletes the active user and redirects to the login page with a deletion message
 def deleteUserPageView(request) :
     user_id = request.session['user_id']
     request.session['user_id'] = None
