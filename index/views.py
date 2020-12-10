@@ -5,6 +5,9 @@ from .models import User
 # this is run at the click of a button on choose user type page before getting to the page that allows you to enter credentials
 def loginPageView(request) :
     # reset user_id, org_id, and user_type when accessing the login page, or set for the first time
+    request.session.flush()
+    request.session.clear_expired()
+    request.session.set_expiry(0)
     request.session['user_id'] = None
     request.session['org_id'] = None
     request.session['user_type'] = None
@@ -23,9 +26,13 @@ def loginPageView(request) :
     
 
 def indexPageView(request) :
+    request.session.flush()
+    request.session.clear_expired()
     return render(request, 'index/home.html')
 
 def aboutPageView(request) :
+    request.session.flush()
+    request.session.clear_expired()
     return render(request, 'index/about.html')
 
 def registerPageView(request) :

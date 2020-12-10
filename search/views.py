@@ -150,7 +150,7 @@ def listingSearchPageView(request) :
         search_terms = request.POST.get('search_terms')
         request.session['search_terms'] = search_terms
         # filters to see if the job title contains the search terms
-        job_listings = Joblisting.objects.filter(job_title__icontains=search_terms)
+        job_listings = Joblisting.objects.filter(job_title__icontains=search_terms)[:50]
         # if no job listings, return string explaining so, else leave string blank
         if job_listings.count() < 1 :
             no_listings_message = 'There are no listings titled ' + search_terms
@@ -168,7 +168,7 @@ def listingSearchPageView(request) :
 def listingPreviewPageView(request) :
     listing_id = request.POST.get('selected_listing_id')
     selected_listing = Joblisting.objects.filter(id=listing_id)
-    job_listings = Joblisting.objects.filter(job_title__icontains=request.session['search_terms'])
+    job_listings = Joblisting.objects.filter(job_title__icontains=request.session['search_terms'])[:50]
     context = {
         "selected_listings" : selected_listing,
         "job_listings" : job_listings,
@@ -185,14 +185,14 @@ def listingDetailPageView(request) :
     organization_list = []
     null_org_message = ""
 
-    if (selected_listing.organization is None) & (userId > 201):
+    if (selected_listing.organization is None) and ((userId > 201) or (userId < 2)):
         null_org_message = "We don't have enough information to make a recommendation."
     else : 
         if (selected_listing.organization is None) :
             organization_list = bcr_org_recom_simp(userId)
         else :
             orgId = selected_listing.organization.id
-            if userId > 201:
+            if (userId > 201) or (userId < 2):
                 organization_list = bcr_similar_companies(orgId)
             else : 
                 organization_list = bcr_org_recommender(userId, orgId)

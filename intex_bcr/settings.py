@@ -80,7 +80,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'intex_bcr.wsgi.application'
 
-
+# postgres://{user}:{password}@{hostname}:{port}/{database-name}
+# postgres://vbgdppnogynoay:3ec60866ac0b031fa9bf84834d29f89b1b9bce1d73f201d5be6fcf2e64f71a74@ec2-52-201-184-16.compute-1.amazonaws.com:5432/d8u32hl39fh54i
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 

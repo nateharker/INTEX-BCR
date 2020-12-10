@@ -82,7 +82,7 @@ def userSearchPageView(request) :
         if not last_name:
             last_name = str(1)
         # filters to look for first and last name in search string
-        applicants = User.objects.filter(Q(first_name__icontains=first_name) | Q(last_name__icontains=last_name))
+        applicants = User.objects.filter(Q(first_name__icontains=first_name) | Q(last_name__icontains=last_name))[:50]
         # if no job listings, return string explaining so, else leave string blank
         if applicants.count() < 1 :
             first_name = request.POST.get('first_name')
