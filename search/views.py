@@ -22,8 +22,8 @@ def bcr_org_recommender(userId, orgId) :
     # assign data to body variable in json format
     body = str.encode(json.dumps(data))
 
-    url = 'https://ussouthcentral.services.azureml.net/workspaces/33669fccee6e44bb9fe4cec0e11d2195/services/762f03f941b14ec18fd4ff574d969281/execute?api-version=2.0&details=true'
-    api_key = 'FcKbi+rABUqHwyqeboIwlM+yHmfGs3sbe4LwtfWgcaITmJPItPaumZOC1P/z2h0ZeUojUWcG/mPNxufg548ywg==' 
+    url = 'https://ussouthcentral.services.azureml.net/workspaces/33669fccee6e44bb9fe4cec0e11d2195/services/4beb0953bdf642848bc2b045f9e41422/execute?api-version=2.0&details=true'
+    api_key = 'd4//+i9rRZsNJRlDjRvrhv3C6O4zn/RiXE5f/feuvb9Je03fDncCGPdC/80b1p1oyrpc5HBFQMG2wXPfXDBL2A==' 
     headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
     # format request with url, input previously loaded, and headers - which contains the API key
     req = urllib.request.Request(url, body, headers) 
@@ -180,7 +180,7 @@ def listingPreviewPageView(request) :
 def listingDetailPageView(request) :    
     listing_id = request.POST.get('selected_listing_id')
     selected_listing = Joblisting.objects.get(id=listing_id)
-    userId = request.session['user_id']
+    userId = int(request.session['user_id'])
     listing_list = []
     organization_list = []
     null_org_message = ""
@@ -198,7 +198,8 @@ def listingDetailPageView(request) :
                 organization_list = bcr_org_recommender(userId, orgId)
 
         for org_id in organization_list :
-            listing_list.append((Joblisting.objects.filter(organization=org_id)).first())
+            if (Joblisting.objects.filter(organization=org_id)).first() is not None :
+                listing_list.append((Joblisting.objects.filter(organization=org_id)).first())
 
     # test_listing = (Joblisting.objects.filter(organization=organization_list[0])).first()
     # implement if we extra time
