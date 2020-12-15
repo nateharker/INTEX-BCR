@@ -114,7 +114,7 @@ def userDetailPageView(request) :
     if int(userId) > 201:
         null_user_list_message = "We don't have enough information about this user to provide recommendations!"
     else :
-        user_id_list = bcr_app_recommender(userId, orgId)
+        user_id_list = bcr_app_recommender(orgId, userId)
 
     # append the users that coincide with the id list to a user list that we will then pass through
     recommended_user_list =[]
